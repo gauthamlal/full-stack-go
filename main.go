@@ -10,6 +10,8 @@ import (
 func newRouter() *mux.Router {
 	r := mux.NewRouter()
 	r.HandleFunc("/hello", handler).Methods("GET")
+	r.HandleFunc("/bird", getBirdHandler).Methods("GET")
+	r.HandleFunc("/bird", createBirdHandler).Methods("POST")
 
 	staticFileDirectory := http.Dir("./assets/")
 	staticFileHandler := http.StripPrefix("/assets/", http.FileServer(staticFileDirectory))
@@ -21,6 +23,7 @@ func newRouter() *mux.Router {
 
 func main() {
 	r := newRouter()
+	fmt.Println("Server is running on port 8080")
 	http.ListenAndServe(":8080", r)
 }
 
